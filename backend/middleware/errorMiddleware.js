@@ -16,7 +16,7 @@ const errorHandler = (err, req, res, next) => {
 
     res.status(statusCode).json({
          message,
-         stack: provess.env.NODE_ENV === 'production' ? 'thicc stacc' : err.stack,
+         stack: process.env.NODE_ENV === 'production' ? 'thicc stacc' : err.stack,
     });
 };
 
