@@ -1,24 +1,33 @@
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa"
 
+function getStar(value, compare){
+    if(value >= compare)
+        return <FaStar/>
+    else if(value >= compare - 0.5)
+        return <FaStarHalfAlt/>
+    else
+        return <FaRegStar/>
+}
+
 const Rating = ({ value, text }) => {
   return (
     <div className='rating'>
         <span>
-            { value >= 1 ? <FaStar /> : value >= 0.5 ? <FaStarHalfAlt /> : <FaRegStar />}
+            { getStar(value, 1) }
         </span>
         <span>
-            { value >= 2 ? <FaStar /> : value >= 1.5 ? <FaStarHalfAlt /> : <FaRegStar />}
+            { getStar(value, 2) }
         </span>
         <span>
-            { value >= 3 ? <FaStar /> : value >= 2.5 ? <FaStarHalfAlt /> : <FaRegStar />}
+            { getStar(value, 3) }
         </span>
         <span>
-            { value >= 4 ? <FaStar /> : value >= 3.5 ? <FaStarHalfAlt /> : <FaRegStar />}
+            { getStar(value, 4) }
         </span>
         <span>
-            { value >= 5 ? <FaStar /> : value >= 4.5 ? <FaStarHalfAlt /> : <FaRegStar />}
+            { getStar(value, 5) }
         </span>
-        <span className="rating-text">{text && text}</span>
+        <span className="rating-text">{text}</span>
     </div>
   )
 }

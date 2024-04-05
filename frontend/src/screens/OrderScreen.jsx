@@ -156,7 +156,7 @@ const OrderScreen = () => {
                         <ListGroup.Item>
                             <h2>Order Items</h2>
                             {order.orderItems.map((item, index) => (
-                                <ListGroup.Item key={index}>
+                                <ListGroup.Item key={item._id}>
                                     <Row>
                                         <Col md={1}>
                                             <Image src={item.image} alt={item.name} fluid rounded />
@@ -232,7 +232,7 @@ const OrderScreen = () => {
 
                             {loadingDeliver && <Loader />}
 
-                            {userInfo && userInfo.isAdmin && order.isPaid &&
+                            {userInfo?.isAdmin && order.isPaid &&
                             !order.isDelivered && (
                                 <ListGroup.Item>
                                     <Button type='button' className='btn btn-block'
