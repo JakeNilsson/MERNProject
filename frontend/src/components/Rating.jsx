@@ -27,7 +27,7 @@ const Rating = ({ value, text }) => {
         <span>
             { getStar(value, 5) }
         </span>
-        <span className="rating-text">{text && text}</span>
+        <span className="rating-text">{text}</span>
     </div>
   )
 }
