@@ -24,3 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 /.scannerwork
+sonar-project.properties
+sonar-scanner-5.0.1.3006-windows
