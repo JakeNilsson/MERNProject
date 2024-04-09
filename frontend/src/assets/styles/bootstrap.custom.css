@@ -3653,12 +3653,10 @@ fieldset:disabled .btn {
   border-right: 0;
   border-bottom: 0.3em solid transparent;
   border-left: 0.3em solid;
+  vertical-align: 0;
 }
 .dropend .dropdown-toggle:empty::after {
   margin-left: 0;
-}
-.dropend .dropdown-toggle::after {
-  vertical-align: 0;
 }
 
 .dropstart .dropdown-menu[data-bs-popper] {
