@@ -3671,10 +3671,9 @@ fieldset:disabled .btn {
   margin-left: 0.255em;
   vertical-align: 0.255em;
   content: '';
-}
-.dropstart .dropdown-toggle::after {
   display: none;
 }
+
 .dropstart .dropdown-toggle::before {
   display: inline-block;
   margin-right: 0.255em;
