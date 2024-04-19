@@ -48,6 +48,10 @@ const ProductScreen = () => {
     navigate("/cart");
   };
 
+  const saveForLaterHandler = () => {
+    console.log("TODO: haven't done this yet");
+  }
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -158,6 +162,16 @@ const ProductScreen = () => {
                       onClick={addToCartHandler}
                     >
                       Add To Cart
+                    </Button>
+                  </ListGroup.Item>
+
+                  <ListGroup.Item>
+                    <Button
+                        className="btn-block"
+                        type="button"
+                        onClick={saveForLaterHandler}
+                    >
+                        Save For Later
                     </Button>
                   </ListGroup.Item>
                 </ListGroup>
