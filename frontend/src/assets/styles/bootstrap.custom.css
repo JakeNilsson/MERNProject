@@ -575,14 +575,6 @@ legend + * {
   -webkit-appearance: textfield;
 }
 
-/* rtl:raw:
-[type="tel"],
-[type="url"],
-[type="email"],
-[type="number"] {
-  direction: ltr;
-}
-*/
 ::-webkit-search-decoration {
   -webkit-appearance: none;
 }
@@ -3661,12 +3653,10 @@ fieldset:disabled .btn {
   border-right: 0;
   border-bottom: 0.3em solid transparent;
   border-left: 0.3em solid;
+  vertical-align: 0;
 }
 .dropend .dropdown-toggle:empty::after {
   margin-left: 0;
-}
-.dropend .dropdown-toggle::after {
-  vertical-align: 0;
 }
 
 .dropstart .dropdown-menu[data-bs-popper] {
@@ -3681,10 +3671,9 @@ fieldset:disabled .btn {
   margin-left: 0.255em;
   vertical-align: 0.255em;
   content: '';
-}
-.dropstart .dropdown-toggle::after {
   display: none;
 }
+
 .dropstart .dropdown-toggle::before {
   display: inline-block;
   margin-right: 0.255em;
