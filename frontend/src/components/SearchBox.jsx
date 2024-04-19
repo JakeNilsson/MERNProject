@@ -22,6 +22,7 @@ const SearchBox = () => {
       navigate("/");
     }
   };
+
   if (isLoading) {
     return <Loader />;
   } else if (error) {
@@ -37,7 +38,7 @@ const SearchBox = () => {
           placeholder="Search Products..."
           className="mr-sm-2 ml-sm-5"
         ></Form.Control>
-        <Dropdown as={ButtonGroup} className="mx-2" autoClose="outside">
+        <Dropdown as={ButtonGroup} className="mx-2">
           <Button type="submit" variant="outline-light">
             Search
           </Button>
@@ -46,7 +47,9 @@ const SearchBox = () => {
             <Dropdown.ItemText>Categories</Dropdown.ItemText>
             <Dropdown.Divider />
             {categories.map((category) => (
-              <Dropdown.Item>{category}</Dropdown.Item>
+              <Dropdown.Item href={`/category/${category}`}>
+                {category}
+              </Dropdown.Item>
             ))}{" "}
           </Dropdown.Menu>
         </Dropdown>
