@@ -65,17 +65,17 @@ const router = createBrowserRouter(
   )
 )
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+//const root = ReactDOM.createRoot(document.getElementById('root')); //here
 root.render(
-  <React.StrictMode>
-    <HelmetProvider>
-      <Provider store={store}>
-        <PayPalScriptProvider deferLoading={true}>
-          <RouterProvider router={router} />
-        </PayPalScriptProvider>
-      </Provider>
-    </HelmetProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+      <HelmetProvider>
+        <Provider store={store}>
+          <PayPalScriptProvider deferLoading={true}>
+            <RouterProvider router={router} />
+          </PayPalScriptProvider>
+        </Provider>
+      </HelmetProvider>
+    </React.StrictMode>
 );
 
 reportWebVitals();
