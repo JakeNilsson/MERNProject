@@ -20,6 +20,7 @@ import {
   useCreateReviewMutation,
 } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
+import { shareTwitter } from "../utils/shareUtils";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -160,6 +161,21 @@ const ProductScreen = () => {
                       Add To Cart
                     </Button>
                   </ListGroup.Item>
+                  
+                  <ListGroup.Item>
+                    Share Product Details <br/><br/>
+                    <Button
+                      classname="btn-block"
+                      type="button"
+                      onClick={() => shareTwitter(product)}
+                    >
+                      Twitter
+                    </Button>
+
+                    {/* Add other share buttons here */}
+                    
+                  </ListGroup.Item>
+
                 </ListGroup>
               </Card>
             </Col>
