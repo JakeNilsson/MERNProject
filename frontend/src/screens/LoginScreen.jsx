@@ -8,6 +8,7 @@ import { useLoginMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from "react-toastify";
 import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 const LoginScreen = () => {
     const[email, setEmail] = useState('')
@@ -43,7 +44,11 @@ const LoginScreen = () => {
 
     const responseFacebook = (response) => {
         console.log(response);
-      }
+    }
+
+      const responseGoogle = (response) => {
+        console.log(response);
+    }
 
   return (
     <FormContainer>
@@ -87,13 +92,25 @@ const LoginScreen = () => {
             </Col>
         </Row>
 
-        <FacebookLogin
-            size='small'
-            appId="1088597931155576"
-            autoLoad={true}
-            fields="name,email,picture"
-            onClick={"h"}
-            callback={responseFacebook} />
+        <Row className='d-flex justify-content-between'>
+            <Col>
+                <FacebookLogin
+                    size='small'
+                    appId="1088597931155576"
+                    autoLoad={true}
+                    fields="name,email,picture"
+                    onClick={responseFacebook}
+                    callback={responseFacebook} />
+            </Col>
+            <Col>
+                <GoogleLogin
+                    clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                    buttonText="LOGIN WITH GOOGLE"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    cookiePolicy={'single_host_origin'} />
+            </Col>
+        </Row>
     </FormContainer>
   )
 }
