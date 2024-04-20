@@ -7,6 +7,7 @@ import Loader from '../components/Loader';
 import { useLoginMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from "react-toastify";
+import FacebookLogin from 'react-facebook-login';
 
 const LoginScreen = () => {
     const[email, setEmail] = useState('')
@@ -39,6 +40,10 @@ const LoginScreen = () => {
             toast.error(err?.data?.message || err.error)
         }
     }
+
+    const responseFacebook = (response) => {
+        console.log(response);
+      }
 
   return (
     <FormContainer>
@@ -78,8 +83,17 @@ const LoginScreen = () => {
                 <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
                     Register
                 </Link>
+                . Or:
             </Col>
         </Row>
+
+        <FacebookLogin
+            size='small'
+            appId="1088597931155576"
+            autoLoad={true}
+            fields="name,email,picture"
+            onClick={"h"}
+            callback={responseFacebook} />
     </FormContainer>
   )
 }
