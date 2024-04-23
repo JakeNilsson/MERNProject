@@ -47,7 +47,7 @@ const LoginScreen = () => {
         console.log(response);
 
         try{
-            const res = await SocialLogin(email).unwrap();
+            const res = await SocialLogin(response.email).unwrap();
             dispatch(setCredentials({...res, }));
             navigate(redirect);
         } catch (err) {
