@@ -4,9 +4,11 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import Loader from '../components/Loader';
-import { useRegisterMutation } from '../slices/usersApiSlice';
+import { useRegisterMutation, useSocialRegisterMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from "react-toastify";
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 const RegisterScreen = () => {
     const[name, setName] = useState('')
@@ -18,6 +20,7 @@ const RegisterScreen = () => {
     const navigate = useNavigate();
 
     const [register, { isLoading }] = useRegisterMutation();
+    const [socialRegister] = useSocialRegisterMutation();
 
     const {userInfo} = useSelector((state) => state.auth);
 
@@ -44,6 +47,28 @@ const RegisterScreen = () => {
                 toast.error(err?.data?.message || err.error)
             }
         }
+    }
+
+    const responseFacebook = async (response) => {
+        console.log(response);
+
+        const name = response.name;
+        const email = response.email;
+        const socialLogin = true;
+
+        try{
+            console.log("1");
+            const res = await socialRegister({name, email, socialLogin}).unwrap();
+            console.log("2");
+            dispatch(setCredentials({...res, }));
+            navigate(redirect);
+        } catch (err) {
+            toast.error(err?.data?.message || err.error)
+        }
+    }
+
+    const responseGoogle = async (response) => {
+        console.log(response);
     }
 
   return (
@@ -104,8 +129,30 @@ const RegisterScreen = () => {
                 <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
                     Login
                 </Link>
+                . Or:
             </Col>
         </Row>
+
+        <Row className='d-flex justify-content-between'>
+            <Col>
+                <FacebookLogin
+                    size='small'
+                    appId="1566878197190181"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    textButton="SIGN UP WITH FACEBOOK"
+                    callback={responseFacebook} />
+            </Col>
+            <Col>
+                <GoogleLogin
+                    clientId="1036034371799-d4225aimppm17e5njhvlqktchrhlmmup.apps.googleusercontent.com"
+                    buttonText="SIGN UP WITH GOOGLE"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    cookiePolicy={'single_host_origin'} />
+            </Col>
+        </Row>
+
     </FormContainer>
   )
 }

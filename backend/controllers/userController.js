@@ -25,13 +25,13 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
-// @desc Auth user with social login & get token
-// @route POST /api/users/login
-// @access Public
+// @desc    Auth user with social login & get token
+// @route   POST /api/users/login
+// @access  Public
 const authSocialUser = asyncHandler(async (req, res) => {
-    const email = req.body;
+    const { email } = req.body;
 
-    const user = await User.findOne(email);
+    const user = await User.findOne({email});
 
     if(user && (await user.socialLogin == true)){
         generateToken(res, user._id);
@@ -81,6 +81,40 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error('Invalid user data');
     }
 });
+
+// @desc    Register user
+// @route   POST /api/users
+// @access  Public
+const registerSocialUser = asyncHandler(async (req, res) => {
+    const {name, email, socialLogin} = req.body;
+
+    const userExists = await User.findOne({email});
+
+    if(userExists){
+        res.status(400);
+        throw new Error('User already exists');
+    }
+
+    const user = await User.create({
+        name,
+        email,
+        socialLogin
+    });
+
+    if (user) {
+        generateToken(res, user._id);
+
+        res.status(201).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            socialLogin: user.socialLogin,
+        });
+    } else {
+        res.status(400);
+        throw new Error('Invalid user data');
+    }
+})
 
 // @desc    Logout user / clear cookie
 // @route   POST /api/users/logout
@@ -211,6 +245,7 @@ export {
     authUser,
     authSocialUser,
     registerUser,
+    registerSocialUser,
     logoutUser,
     getUserProfile,
     updateUserProfile,

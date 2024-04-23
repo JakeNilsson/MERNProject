@@ -46,8 +46,10 @@ const LoginScreen = () => {
     const responseFacebook = async (response) => {
         console.log(response);
 
+        const email = response.email;
+
         try{
-            const res = await SocialLogin(response.email).unwrap();
+            const res = await SocialLogin({email}).unwrap();
             dispatch(setCredentials({...res, }));
             navigate(redirect);
         } catch (err) {
@@ -108,7 +110,6 @@ const LoginScreen = () => {
                     appId="1566878197190181"
                     autoLoad={false}
                     fields="name,email,picture"
-                    onClick={responseFacebook}
                     callback={responseFacebook} />
             </Col>
             <Col>

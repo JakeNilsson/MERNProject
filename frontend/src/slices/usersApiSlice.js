@@ -24,6 +24,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        socialRegister: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/social`,
+                method: 'POST',
+                body: data,
+            }),
+        }),
         logout: builder.mutation({
             query: () => ({
                 url: `${USERS_URL}/logout`,
@@ -72,6 +79,7 @@ export const {
     useSocialLoginMutation,
     useLogoutMutation, 
     useRegisterMutation,
+    useSocialRegisterMutation,
     useProfileMutation,
     useGetUsersQuery, 
     useDeleteUserMutation,
