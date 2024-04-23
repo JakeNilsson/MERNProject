@@ -25,6 +25,29 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
+//
+//
+//
+const authSocialUser = asyncHandler(async (req, res) => {
+    const email = req.body;
+
+    const user = await User.findOne(email);
+
+    if(user && (await user.socialLogin == true)){
+        generateToken(res, user._id);
+
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin
+        });
+    } else {
+        res.status(401);
+        throw new Error("Login failed or account not tied to this email");
+    }
+});
+
 // @desc    Register user
 // @route   POST /api/users
 // @access  Public
@@ -186,6 +209,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
 export {
     authUser,
+    authSocialUser,
     registerUser,
     logoutUser,
     getUserProfile,

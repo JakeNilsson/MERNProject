@@ -42,8 +42,10 @@ const LoginScreen = () => {
         }
     }
 
-    const responseFacebook = (response) => {
+    const responseFacebook = async (response) => {
         console.log(response);
+
+        
     }
 
       const responseGoogle = (response) => {
