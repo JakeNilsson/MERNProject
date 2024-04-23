@@ -51,6 +51,8 @@ const HomeScreen = () => {
             page={data.page}
             keyword={keyword || ""}
             category={category || ""}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
           />
         </>
       )}

@@ -52,6 +52,18 @@ const router = createBrowserRouter(
         path="/search/:keyword/page/:pageNumber"
         element={<HomeScreen />}
       />
+      <Route
+        path="/search/:keyword/min/:minPrice/page/:pageNumber"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/search/:keyword/max/:maxPrice/page/:pageNumber"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/search/:keyword/min/:minPrice/max/:maxPrice/page/:pageNumber"
+        element={<HomeScreen />}
+      />
 
       <Route path="/category/:category" element={<HomeScreen />} />
       <Route
@@ -64,6 +76,22 @@ const router = createBrowserRouter(
       />
       <Route
         path="/category/:category/min/:minPrice/max/:maxPrice"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/page/:pageNumber"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/min/:minPrice/page/:pageNumber"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/max/:maxPrice/page/:pageNumber"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/min/:minPrice/max/:maxPrice/page/:pageNumber"
         element={<HomeScreen />}
       />
 
@@ -83,11 +111,23 @@ const router = createBrowserRouter(
         path="/category/:category/search/:keyword/min/:minPrice/max/:maxPrice"
         element={<HomeScreen />}
       />
-
       <Route
-        path="/category/:category/page/:pageNumber"
+        path="/category/:category/search/:keyword/page/:pageNumber"
         element={<HomeScreen />}
       />
+      <Route
+        path="/category/:category/search/:keyword/min/:minPrice/page/:pageNumber"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/search/:keyword/max/:maxPrice/page/:pageNumber"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/search/:keyword/min/:minPrice/max/:maxPrice/page/:pageNumber"
+        element={<HomeScreen />}
+      />
+
       <Route path="/product/:id" element={<ProductScreen />} />
       <Route path="/cart" element={<CartScreen />} />
       <Route path="/login" element={<LoginScreen />} />

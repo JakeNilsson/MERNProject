@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 const Paginate = ({
   pages,
   page,
+  minPrice,
+  maxPrice,
   isAdmin = false,
   keyword = "",
   category = "",
@@ -17,10 +19,46 @@ const Paginate = ({
             key={x + 1}
             to={
               !isAdmin
-                ? keyword
-                  ? `/search/${keyword}/page/${x + 1}`
-                  : category
-                  ? `/category/${category}/page/${x + 1}`
+                ? category
+                  ? keyword
+                    ? minPrice
+                      ? maxPrice
+                        ? `/category/${category}/search/${keyword}/min/${minPrice}/max/${maxPrice}/page/${
+                            x + 1
+                          }`
+                        : `/category/${category}/search/${keyword}/min/${minPrice}/page/${
+                            x + 1
+                          }`
+                      : maxPrice
+                      ? `/category/${category}/search/${keyword}/max/${maxPrice}/page/${
+                          x + 1
+                        }`
+                      : `/category/${category}/search/${keyword}/page/${x + 1}`
+                    : minPrice
+                    ? maxPrice
+                      ? `/category/${category}/min/${minPrice}/max/${maxPrice}/page/${
+                          x + 1
+                        }`
+                      : `/category/${category}/min/${minPrice}/page/${x + 1}`
+                    : maxPrice
+                    ? `/category/${category}/max/${maxPrice}/page/${x + 1}`
+                    : `/category/${category}/page/${x + 1}`
+                  : keyword
+                  ? minPrice
+                    ? maxPrice
+                      ? `/search/${keyword}/min/${minPrice}/max/${maxPrice}/page/${
+                          x + 1
+                        }`
+                      : `/search/${keyword}/min/${minPrice}/page/${x + 1}`
+                    : maxPrice
+                    ? `/search/${keyword}/max/${maxPrice}/page/${x + 1}`
+                    : `/search/${keyword}/page/${x + 1}`
+                  : minPrice
+                  ? maxPrice
+                    ? `/min/${minPrice}/max/${maxPrice}/page/${x + 1}`
+                    : `/min/${minPrice}/page/${x + 1}`
+                  : maxPrice
+                  ? `/max/${maxPrice}/page/${x + 1}`
                   : `/page/${x + 1}`
                 : `/admin/productlist/${x + 1}`
             }
