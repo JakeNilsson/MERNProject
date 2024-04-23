@@ -18,6 +18,7 @@ const LoginScreen = () => {
     const navigate = useNavigate();
 
     const [Login, { isLoading }] = useLoginMutation();
+    const [SocialLogin] = useSocialLoginMutation(); //doesn't use isLoading, will this be a problem later?
 
     const {userInfo} = useSelector((state) => state.auth);
 
@@ -44,6 +45,14 @@ const LoginScreen = () => {
 
     const responseFacebook = async (response) => {
         console.log(response);
+
+        try{
+            const res = await SocialLogin(email).unwrap();
+            dispatch(setCredentials({...res, }));
+            navigate(redirect);
+        } catch (err) {
+            toast.error(err?.data?.message || err.error)
+        }
     }
 
       const responseGoogle = (response) => {
