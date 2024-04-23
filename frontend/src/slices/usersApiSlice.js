@@ -10,6 +10,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        socialLogin: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/authSocial`,
+                method: 'POST',
+                body: data,
+            }),
+        }),
         register: builder.mutation({
             query: (data) => ({
                 url: `${USERS_URL}`,
@@ -62,6 +69,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 
 export const { 
     useLoginMutation, 
+    useSocialLoginMutation,
     useLogoutMutation, 
     useRegisterMutation,
     useProfileMutation,
