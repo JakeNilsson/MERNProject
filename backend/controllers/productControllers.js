@@ -16,9 +16,21 @@ const getProducts = asyncHandler(async (req, res) => {
     ? { category: { $regex: req.query.category, $options: "i" } }
     : {};
 
-  const count = await Product.countDocuments({ ...keyword, ...category });
+  const minPrice = req.query.minPrice
+    ? { price: { $gte: req.query.minPrice } }
+    : {};
 
-  const products = await Product.find({ ...keyword, ...category })
+  const maxPrice = req.query.maxPrice
+    ? { price: { $lte: req.query.maxPrice } }
+    : {};
+
+  const count = await Product.countDocuments({
+    $and: [{ ...keyword }, { ...category }, { ...minPrice }, { ...maxPrice }],
+  });
+
+  const products = await Product.find({
+    $and: [{ ...keyword }, { ...category }, { ...minPrice }, { ...maxPrice }],
+  })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
   res.json({ products, page, pages: Math.ceil(count / pageSize) });

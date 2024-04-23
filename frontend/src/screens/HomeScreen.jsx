@@ -9,17 +9,19 @@ import Meta from "../components/Meta"; //I use it here where the tutorial choose
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 
 const HomeScreen = () => {
-  const { pageNumber, keyword, category } = useParams();
+  const { pageNumber, keyword, category, minPrice, maxPrice } = useParams();
 
   const { data, isLoading, error } = useGetProductsQuery({
     keyword,
     pageNumber,
     category,
+    minPrice,
+    maxPrice,
   });
 
   return (
     <>
-      {!keyword && !category ? (
+      {!keyword && !category && !minPrice && !maxPrice ? (
         <ProductCarousel />
       ) : (
         <Link to="/" className="btn btn-light mb-4">
@@ -36,6 +38,7 @@ const HomeScreen = () => {
         <>
           <Meta />
           <h1>Latest Products</h1>
+
           <Row>
             {data.products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>

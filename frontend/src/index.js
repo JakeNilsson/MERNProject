@@ -36,13 +36,54 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomeScreen />} />
-      <Route path="/search/:keyword" element={<HomeScreen />} />
-      <Route path="/category/:category" element={<HomeScreen />} />
+      <Route path="/min/:minPrice" element={<HomeScreen />} />
+      <Route path="/max/:maxPrice" element={<HomeScreen />} />
+      <Route path="/min/:minPrice/max/:maxPrice" element={<HomeScreen />} />
       <Route path="/page/:pageNumber" element={<HomeScreen />} />
+
+      <Route path="/search/:keyword" element={<HomeScreen />} />
+      <Route path="/search/:keyword/min/:minPrice" element={<HomeScreen />} />
+      <Route path="/search/:keyword/max/:maxPrice" element={<HomeScreen />} />
+      <Route
+        path="/search/:keyword/min/:minPrice/max/:maxPrice"
+        element={<HomeScreen />}
+      />
       <Route
         path="/search/:keyword/page/:pageNumber"
         element={<HomeScreen />}
       />
+
+      <Route path="/category/:category" element={<HomeScreen />} />
+      <Route
+        path="/category/:category/min/:minPrice"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/max/:maxPrice"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/min/:minPrice/max/:maxPrice"
+        element={<HomeScreen />}
+      />
+
+      <Route
+        path="/category/:category/search/:keyword"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/search/:keyword/min/:minPrice"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/search/:keyword/max/:maxPrice"
+        element={<HomeScreen />}
+      />
+      <Route
+        path="/category/:category/search/:keyword/min/:minPrice/max/:maxPrice"
+        element={<HomeScreen />}
+      />
+
       <Route
         path="/category/:category/page/:pageNumber"
         element={<HomeScreen />}
