@@ -96,15 +96,15 @@ const LoginScreen = () => {
             <Col>
                 <FacebookLogin
                     size='small'
-                    appId="1088597931155576"
-                    autoLoad={true}
+                    appId="1566878197190181"
+                    autoLoad={false}
                     fields="name,email,picture"
                     onClick={responseFacebook}
                     callback={responseFacebook} />
             </Col>
             <Col>
                 <GoogleLogin
-                    clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                    clientId="1036034371799-d4225aimppm17e5njhvlqktchrhlmmup.apps.googleusercontent.com"
                     buttonText="LOGIN WITH GOOGLE"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
