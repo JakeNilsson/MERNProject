@@ -25,9 +25,9 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
-//
-//
-//
+// @desc Auth user with social login & get token
+// @route POST /api/users/login
+// @access Public
 const authSocialUser = asyncHandler(async (req, res) => {
     const email = req.body;
 
