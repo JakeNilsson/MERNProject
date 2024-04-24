@@ -8,7 +8,9 @@ import { useRegisterMutation, useSocialRegisterMutation } from '../slices/usersA
 import { setCredentials } from '../slices/authSlice';
 import { toast } from "react-toastify";
 import FacebookLogin from 'react-facebook-login';
-import GoogleLogin from 'react-google-login';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 
 const RegisterScreen = () => {
     const[name, setName] = useState('')
@@ -50,26 +52,37 @@ const RegisterScreen = () => {
     }
 
     const responseFacebook = async (response) => {
-        console.log(response);
-
         const name = response.name;
         const email = response.email;
         const socialLogin = true;
 
         try{
-            console.log("1");
             const res = await socialRegister({name, email, socialLogin}).unwrap();
-            console.log("2");
             dispatch(setCredentials({...res, }));
             navigate(redirect);
         } catch (err) {
             toast.error(err?.data?.message || err.error)
         }
     }
-
+    
     const responseGoogle = async (response) => {
-        console.log(response);
-    }
+        const name = jwtDecode(response.credential).name;
+        const email = jwtDecode(response.credential).email;
+        const socialLogin = true;
+
+        try{
+            const res = await socialRegister({name, email, socialLogin}).unwrap();
+            dispatch(setCredentials({...res, }));
+            navigate(redirect);
+        } catch (err) {
+            toast.error(err?.data?.message || err.error)
+        }
+    };
+
+
+    const errorMessage = (error) => {
+        console.log(error);
+    };
 
   return (
     <FormContainer>
@@ -144,12 +157,10 @@ const RegisterScreen = () => {
                     callback={responseFacebook} />
             </Col>
             <Col>
-                <GoogleLogin
-                    clientId="1036034371799-d4225aimppm17e5njhvlqktchrhlmmup.apps.googleusercontent.com"
-                    buttonText="SIGN UP WITH GOOGLE"
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    cookiePolicy={'single_host_origin'} />
+                <GoogleOAuthProvider clientId="1036034371799-d4225aimppm17e5njhvlqktchrhlmmup.apps.googleusercontent.com">  
+                    <GoogleLogin width="100" theme="filled_blue" text="signup_with" onSuccess={responseGoogle} onError={errorMessage} />
+                </GoogleOAuthProvider>
+                
             </Col>
         </Row>
 

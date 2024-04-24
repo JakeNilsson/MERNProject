@@ -8,7 +8,9 @@ import { useLoginMutation, useSocialLoginMutation } from '../slices/usersApiSlic
 import { setCredentials } from '../slices/authSlice';
 import { toast } from "react-toastify";
 import FacebookLogin from 'react-facebook-login';
-import GoogleLogin from 'react-google-login';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 
 const LoginScreen = () => {
     const[email, setEmail] = useState('')
@@ -44,8 +46,6 @@ const LoginScreen = () => {
     }
 
     const responseFacebook = async (response) => {
-        console.log(response);
-
         const email = response.email;
 
         try{
@@ -57,9 +57,21 @@ const LoginScreen = () => {
         }
     }
 
-      const responseGoogle = (response) => {
-        console.log(response);
+      const responseGoogle = async (response) => {
+        const email = jwtDecode(response.credential).email;
+
+        try{
+            const res = await SocialLogin({email}).unwrap();
+            dispatch(setCredentials({...res, }));
+            navigate(redirect);
+        } catch (err) {
+            toast.error(err?.data?.message || err.error)
+        }
     }
+
+    const errorMessage = (error) => {
+        console.log(error);
+    };
 
   return (
     <FormContainer>
@@ -113,12 +125,9 @@ const LoginScreen = () => {
                     callback={responseFacebook} />
             </Col>
             <Col>
-                <GoogleLogin
-                    clientId="1036034371799-d4225aimppm17e5njhvlqktchrhlmmup.apps.googleusercontent.com"
-                    buttonText="LOGIN WITH GOOGLE"
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    cookiePolicy={'single_host_origin'} />
+            <GoogleOAuthProvider clientId="1036034371799-d4225aimppm17e5njhvlqktchrhlmmup.apps.googleusercontent.com">  
+                    <GoogleLogin width="100" size="large" text="signin_with" theme="filled_blue" onSuccess={responseGoogle} onError={errorMessage} />
+                </GoogleOAuthProvider>
             </Col>
         </Row>
     </FormContainer>
