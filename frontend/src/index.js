@@ -40,6 +40,12 @@ const router = createBrowserRouter(
       <Route path="/max/:maxPrice" element={<HomeScreen />} />
       <Route path="/min/:minPrice/max/:maxPrice" element={<HomeScreen />} />
       <Route path="/page/:pageNumber" element={<HomeScreen />} />
+      <Route path="/min/:minPrice/page/:pageNumber" element={<HomeScreen />} />
+      <Route path="/max/:maxPrice/page/:pageNumber" element={<HomeScreen />} />
+      <Route
+        path="/min/:minPrice/max/:maxPrice/page/:pageNumber"
+        element={<HomeScreen />}
+      />
 
       <Route path="/search/:keyword" element={<HomeScreen />} />
       <Route path="/search/:keyword/min/:minPrice" element={<HomeScreen />} />

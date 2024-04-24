@@ -9,6 +9,7 @@ import {
   useUpdateProductMutation,
   useGetProductDetailsQuery,
   useUploadProductImageMutation,
+  useGetProductCategoriesQuery,
 } from "../../slices/productsApiSlice";
 
 const ProductEditScreen = () => {
@@ -21,6 +22,8 @@ const ProductEditScreen = () => {
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
+
+  const { refetch: categoryRefetch } = useGetProductCategoriesQuery();
 
   const {
     data: product,
@@ -67,6 +70,7 @@ const ProductEditScreen = () => {
       toast.error(result.error);
     } else {
       toast.success("Product updated");
+      categoryRefetch();
       refetch();
       navigate("/admin/productlist");
     }

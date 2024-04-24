@@ -21,52 +21,66 @@ const SearchBox = () => {
     setKeyword("");
     setMinPrice("");
     setMaxPrice("");
+    let min;
+    if (maxPrice) {
+      min = Math.min(minPrice, maxPrice);
+    } else {
+      min = minPrice;
+    }
+    const max = Math.max(minPrice, maxPrice);
     if (keyword.trim()) {
       if (minPrice && maxPrice) {
-        navigate(`/search/${keyword}/min/${minPrice}/max/${maxPrice}`);
+        navigate(`/search/${keyword}/min/${min}/max/${max}`);
       } else if (minPrice) {
-        navigate(`/search/${keyword}/min/${minPrice}`);
+        navigate(`/search/${keyword}/min/${min}`);
       } else if (maxPrice) {
-        navigate(`/search/${keyword}/max/${maxPrice}`);
+        navigate(`/search/${keyword}/max/${max}`);
       } else {
         navigate(`/search/${keyword}`);
       }
     } else {
       if (minPrice && maxPrice) {
-        navigate(`/min/${minPrice}/max/${maxPrice}`);
+        navigate(`/min/${min}/max/${max}`);
       } else if (minPrice) {
-        navigate(`/min/${minPrice}`);
+        navigate(`/min/${min}`);
       } else if (maxPrice) {
-        navigate(`/max/${maxPrice}`);
+        navigate(`/max/${max}`);
       } else {
         navigate(`/`);
       }
     }
   };
 
-  const handleItemClick = (category) => {
+  const categoryHandler = (category) => {
     setKeyword("");
     setMinPrice("");
     setMaxPrice("");
+    let min;
+    if (maxPrice) {
+      min = Math.min(minPrice, maxPrice);
+    } else {
+      min = minPrice;
+    }
+    const max = Math.max(minPrice, maxPrice);
     if (keyword.trim()) {
       if (minPrice && maxPrice) {
         navigate(
-          `/category/${category}/search/${keyword}/min/${minPrice}/max/${maxPrice}`
+          `/category/${category}/search/${keyword}/min/${min}/max/${max}`
         );
       } else if (minPrice) {
-        navigate(`/category/${category}/search/${keyword}/min/${minPrice}`);
+        navigate(`/category/${category}/search/${keyword}/min/${min}`);
       } else if (maxPrice) {
-        navigate(`/category/${category}/search/${keyword}/max/${maxPrice}`);
+        navigate(`/category/${category}/search/${keyword}/max/${max}`);
       } else {
         navigate(`/category/${category}/search/${keyword}`);
       }
     } else {
       if (minPrice && maxPrice) {
-        navigate(`/category/${category}/min/${minPrice}/max/${maxPrice}`);
+        navigate(`/category/${category}/min/${min}/max/${max}`);
       } else if (minPrice) {
-        navigate(`/category/${category}/min/${minPrice}`);
+        navigate(`/category/${category}/min/${min}`);
       } else if (maxPrice) {
-        navigate(`/category/${category}/max/${maxPrice}`);
+        navigate(`/category/${category}/max/${max}`);
       } else {
         navigate(`/category/${category}`);
       }
@@ -83,7 +97,10 @@ const SearchBox = () => {
         <Form.Control
           type="number"
           value={minPrice}
-          onChange={(e) => setMinPrice(e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            setMinPrice(value < 0 ? 0 : value);
+          }}
           placeholder="Min Price"
           className="mr-sm-2"
         ></Form.Control>
@@ -91,7 +108,10 @@ const SearchBox = () => {
         <Form.Control
           type="number"
           value={maxPrice}
-          onChange={(e) => setMaxPrice(e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            setMaxPrice(value < 0 ? 0 : value);
+          }}
           placeholder="Max Price"
           className="mr-sm-2"
         ></Form.Control>
@@ -113,7 +133,7 @@ const SearchBox = () => {
             <Dropdown.ItemText>Categories</Dropdown.ItemText>
             <Dropdown.Divider />
             {categories.map((category) => (
-              <Dropdown.Item onClick={() => handleItemClick(category)}>
+              <Dropdown.Item onClick={() => categoryHandler(category)}>
                 {category}
               </Dropdown.Item>
             ))}{" "}
