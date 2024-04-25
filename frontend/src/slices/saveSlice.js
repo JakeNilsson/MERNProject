@@ -31,6 +31,6 @@ const saveSlice = createSlice({
     },
 });
 
-export const {addToSavedItems} = saveSlice.actions;
+export const {addToSavedItems, removeFromSavedItems} = saveSlice.actions;
 
 export default saveSlice.reducer;
