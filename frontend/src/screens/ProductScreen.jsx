@@ -20,6 +20,7 @@ import {
   useCreateReviewMutation,
 } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
+import { addToSavedItems } from "../slices/saveSlice";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -49,7 +50,8 @@ const ProductScreen = () => {
   };
 
   const saveForLaterHandler = () => {
-    console.log("TODO: haven't done this yet");
+    dispatch(addToSavedItems({...product}));
+    navigate("/save");
   }
 
   const submitHandler = async (e) => {
