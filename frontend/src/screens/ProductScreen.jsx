@@ -20,7 +20,10 @@ import {
   useCreateReviewMutation,
 } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
-import { shareTwitter } from "../utils/shareUtils";
+import { shareTwitter, shareWhatsApp, shareTelegram } from "../utils/shareUtils";
+import twitter_icon from "../assets/twitter_icon.png"
+import whatsapp_icon from "../assets/whatsapp_icon.png"
+import telegram_icon from "../assets/telegram_icon.png"
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -167,15 +170,39 @@ const ProductScreen = () => {
                     <Button
                       classname="btn-block"
                       type="button"
+                      style={{
+                        backgroundColor:"#ffffff",
+                        padding:"3px 3px",
+                        marginRight:"10px"
+                      }}
                       onClick={() => shareTwitter(product)}
                     >
-                      Twitter
+                      <img src={twitter_icon} alt='Twitter' />
                     </Button>
-
-                    {/* Add other share buttons here */}
-                    
+                    <Button
+                      classname="btn-block"
+                      type="button"
+                      style={{
+                        backgroundColor:"#ffffff",
+                        padding:"3px 3px",
+                        marginRight:"10px"
+                      }}
+                      onClick={() => shareWhatsApp(product)}
+                    >
+                      <img src={whatsapp_icon} alt='WhatsApp' />
+                    </Button>
+                    <Button
+                      classname="btn-block"
+                      type="button"
+                      style={{
+                        backgroundColor:"#ffffff",
+                        padding:"3px 3px",
+                      }}
+                      onClick={() => shareTelegram(product)}
+                    >
+                      <img src={telegram_icon} alt='Telegram' />
+                    </Button>
                   </ListGroup.Item>
-
                 </ListGroup>
               </Card>
             </Col>
