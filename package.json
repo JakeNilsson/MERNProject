@@ -25,7 +25,10 @@
     "jwt-decode": "^4.0.0",
     "mongoose": "^8.1.1",
     "multer": "^1.4.5-lts.1",
-    "react-facebook-login": "^4.1.1"
+    "react-facebook-login": "^4.1.1",
+    "rc-slider": "^10.6.2",
+    "react-bootstrap-range-slider": "^3.0.8",
+    "react-slider": "^2.0.6"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
