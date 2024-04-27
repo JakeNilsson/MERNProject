@@ -20,6 +20,7 @@ import {
   useCreateReviewMutation,
 } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
+import { addToSavedItems } from "../slices/saveSlice";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -47,6 +48,11 @@ const ProductScreen = () => {
     dispatch(addToCart({ ...product, qty }));
     navigate("/cart");
   };
+
+  const saveForLaterHandler = () => {
+    dispatch(addToSavedItems({...product}));
+    navigate("/save");
+  }
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -158,6 +164,16 @@ const ProductScreen = () => {
                       onClick={addToCartHandler}
                     >
                       Add To Cart
+                    </Button>
+                  </ListGroup.Item>
+
+                  <ListGroup.Item>
+                    <Button
+                        className="btn-block"
+                        type="button"
+                        onClick={saveForLaterHandler}
+                    >
+                        Save For Later
                     </Button>
                   </ListGroup.Item>
                 </ListGroup>
