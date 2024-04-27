@@ -20,6 +20,10 @@ import {
   useCreateReviewMutation,
 } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
+import { shareTwitter, shareWhatsApp, shareTelegram } from "../utils/shareUtils";
+import twitter_icon from "../assets/twitter_icon.png"
+import whatsapp_icon from "../assets/whatsapp_icon.png"
+import telegram_icon from "../assets/telegram_icon.png"
 import { addToSavedItems } from "../slices/saveSlice";
 
 const ProductScreen = () => {
@@ -174,6 +178,45 @@ const ProductScreen = () => {
                         onClick={saveForLaterHandler}
                     >
                         Save For Later
+                    </Button>
+                  </ListGroup.Item>
+                  
+                  <ListGroup.Item>
+                    Share Product Details <br/><br/>
+                    <Button
+                      classname="btn-block"
+                      type="button"
+                      style={{
+                        backgroundColor:"#ffffff",
+                        padding:"3px 3px",
+                        marginRight:"10px"
+                      }}
+                      onClick={() => shareTwitter(product)}
+                    >
+                      <img src={twitter_icon} alt='Twitter' />
+                    </Button>
+                    <Button
+                      classname="btn-block"
+                      type="button"
+                      style={{
+                        backgroundColor:"#ffffff",
+                        padding:"3px 3px",
+                        marginRight:"10px"
+                      }}
+                      onClick={() => shareWhatsApp(product)}
+                    >
+                      <img src={whatsapp_icon} alt='WhatsApp' />
+                    </Button>
+                    <Button
+                      classname="btn-block"
+                      type="button"
+                      style={{
+                        backgroundColor:"#ffffff",
+                        padding:"3px 3px",
+                      }}
+                      onClick={() => shareTelegram(product)}
+                    >
+                      <img src={telegram_icon} alt='Telegram' />
                     </Button>
                   </ListGroup.Item>
                 </ListGroup>
