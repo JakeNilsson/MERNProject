@@ -4,9 +4,13 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import Loader from '../components/Loader';
-import { useLoginMutation } from '../slices/usersApiSlice';
+import { useLoginMutation, useSocialLoginMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from "react-toastify";
+import FacebookLogin from 'react-facebook-login';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 
 const LoginScreen = () => {
     const[email, setEmail] = useState('')
@@ -16,6 +20,7 @@ const LoginScreen = () => {
     const navigate = useNavigate();
 
     const [Login, { isLoading }] = useLoginMutation();
+    const [SocialLogin] = useSocialLoginMutation(); //doesn't use isLoading, will this be a problem later?
 
     const {userInfo} = useSelector((state) => state.auth);
 
@@ -39,6 +44,36 @@ const LoginScreen = () => {
             toast.error(err?.data?.message || err.error)
         }
     }
+
+    const responseFacebook = async (response) => {
+        const email = response.email;
+        const socialLoginString = 'facebook';
+
+        try{
+            const res = await SocialLogin({email, socialLoginString}).unwrap();
+            dispatch(setCredentials({...res, }));
+            navigate(redirect);
+        } catch (err) {
+            toast.error(err?.data?.message || err.error)
+        }
+    }
+
+      const responseGoogle = async (response) => {
+        const email = jwtDecode(response.credential).email;
+        const socialLoginString = 'google';
+
+        try{
+            const res = await SocialLogin({email, socialLoginString}).unwrap();
+            dispatch(setCredentials({...res, }));
+            navigate(redirect);
+        } catch (err) {
+            toast.error(err?.data?.message || err.error)
+        }
+    }
+
+    const errorMessage = (error) => {
+        console.log(error);
+    };
 
   return (
     <FormContainer>
@@ -78,6 +113,23 @@ const LoginScreen = () => {
                 <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
                     Register
                 </Link>
+                . Or:
+            </Col>
+        </Row>
+
+        <Row className='d-flex justify-content-between'>
+            <Col>
+                <FacebookLogin
+                    size='small'
+                    appId="1566878197190181"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    callback={responseFacebook} />
+            </Col>
+            <Col>
+            <GoogleOAuthProvider clientId="1036034371799-d4225aimppm17e5njhvlqktchrhlmmup.apps.googleusercontent.com">  
+                    <GoogleLogin width="100" size="large" text="signin_with" theme="filled_blue" onSuccess={responseGoogle} onError={errorMessage} />
+                </GoogleOAuthProvider>
             </Col>
         </Row>
     </FormContainer>

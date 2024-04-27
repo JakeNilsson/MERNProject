@@ -13,13 +13,23 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: false,
     },
     isAdmin: {
         type: Boolean,
         required: true,
         default: false,
     },
+    googleLogin: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
+    facebookLogin: {
+        type: Boolean,
+        required: false,
+        default: false,
+    }
 }, {
     timestamps: true,
 });

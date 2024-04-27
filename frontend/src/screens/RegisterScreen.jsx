@@ -4,9 +4,13 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import Loader from '../components/Loader';
-import { useRegisterMutation } from '../slices/usersApiSlice';
+import { useRegisterMutation, useSocialRegisterMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from "react-toastify";
+import FacebookLogin from 'react-facebook-login';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 
 const RegisterScreen = () => {
     const[name, setName] = useState('')
@@ -18,6 +22,7 @@ const RegisterScreen = () => {
     const navigate = useNavigate();
 
     const [register, { isLoading }] = useRegisterMutation();
+    const [socialRegister] = useSocialRegisterMutation();
 
     const {userInfo} = useSelector((state) => state.auth);
 
@@ -45,6 +50,39 @@ const RegisterScreen = () => {
             }
         }
     }
+
+    const responseFacebook = async (response) => {
+        const name = response.name;
+        const email = response.email;
+        const socialLoginString = 'facebook';
+
+        try{
+            const res = await socialRegister({name, email, socialLoginString}).unwrap();
+            dispatch(setCredentials({...res, }));
+            navigate(redirect);
+        } catch (err) {
+            toast.error(err?.data?.message || err.error)
+        }
+    }
+    
+    const responseGoogle = async (response) => {
+        const name = jwtDecode(response.credential).name;
+        const email = jwtDecode(response.credential).email;
+        const socialLoginString = 'google';
+
+        try{
+            const res = await socialRegister({name, email, socialLoginString}).unwrap();
+            dispatch(setCredentials({...res, }));
+            navigate(redirect);
+        } catch (err) {
+            toast.error(err?.data?.message || err.error)
+        }
+    };
+
+
+    const errorMessage = (error) => {
+        console.log(error);
+    };
 
   return (
     <FormContainer>
@@ -104,8 +142,28 @@ const RegisterScreen = () => {
                 <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
                     Login
                 </Link>
+                . Or:
             </Col>
         </Row>
+
+        <Row className='d-flex justify-content-between'>
+            <Col>
+                <FacebookLogin
+                    size='small'
+                    appId="1566878197190181"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    textButton="SIGN UP WITH FACEBOOK"
+                    callback={responseFacebook} />
+            </Col>
+            <Col>
+                <GoogleOAuthProvider clientId="1036034371799-d4225aimppm17e5njhvlqktchrhlmmup.apps.googleusercontent.com">  
+                    <GoogleLogin width="100" theme="filled_blue" text="signup_with" onSuccess={responseGoogle} onError={errorMessage} />
+                </GoogleOAuthProvider>
+                
+            </Col>
+        </Row>
+
     </FormContainer>
   )
 }
