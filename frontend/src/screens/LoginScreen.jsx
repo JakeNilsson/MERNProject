@@ -47,9 +47,10 @@ const LoginScreen = () => {
 
     const responseFacebook = async (response) => {
         const email = response.email;
+        const socialLoginString = 'facebook';
 
         try{
-            const res = await SocialLogin({email}).unwrap();
+            const res = await SocialLogin({email, socialLoginString}).unwrap();
             dispatch(setCredentials({...res, }));
             navigate(redirect);
         } catch (err) {
@@ -59,9 +60,10 @@ const LoginScreen = () => {
 
       const responseGoogle = async (response) => {
         const email = jwtDecode(response.credential).email;
+        const socialLoginString = 'google';
 
         try{
-            const res = await SocialLogin({email}).unwrap();
+            const res = await SocialLogin({email, socialLoginString}).unwrap();
             dispatch(setCredentials({...res, }));
             navigate(redirect);
         } catch (err) {

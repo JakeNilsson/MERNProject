@@ -20,7 +20,12 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: false,
     },
-    socialLogin: {
+    googleLogin: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
+    facebookLogin: {
         type: Boolean,
         required: false,
         default: false,

@@ -54,10 +54,10 @@ const RegisterScreen = () => {
     const responseFacebook = async (response) => {
         const name = response.name;
         const email = response.email;
-        const socialLogin = true;
+        const socialLoginString = 'facebook';
 
         try{
-            const res = await socialRegister({name, email, socialLogin}).unwrap();
+            const res = await socialRegister({name, email, socialLoginString}).unwrap();
             dispatch(setCredentials({...res, }));
             navigate(redirect);
         } catch (err) {
@@ -68,10 +68,10 @@ const RegisterScreen = () => {
     const responseGoogle = async (response) => {
         const name = jwtDecode(response.credential).name;
         const email = jwtDecode(response.credential).email;
-        const socialLogin = true;
+        const socialLoginString = 'google';
 
         try{
-            const res = await socialRegister({name, email, socialLogin}).unwrap();
+            const res = await socialRegister({name, email, socialLoginString}).unwrap();
             dispatch(setCredentials({...res, }));
             navigate(redirect);
         } catch (err) {

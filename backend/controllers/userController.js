@@ -29,11 +29,16 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/login
 // @access  Public
 const authSocialUser = asyncHandler(async (req, res) => {
-    const { email } = req.body;
+    const { email, socialLoginString } = req.body;
 
     const user = await User.findOne({email});
 
-    if(user && (await user.socialLogin == true)){
+    if(user && 
+        (
+        ((socialLoginString == 'google') && (await user.googleLogin == true)) || 
+        ((socialLoginString == 'facebook') && (await user.facebookLogin == true))
+        ))
+    {
         generateToken(res, user._id);
 
         res.status(200).json({
@@ -86,7 +91,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerSocialUser = asyncHandler(async (req, res) => {
-    const {name, email, socialLogin} = req.body;
+    const {name, email, socialLoginString} = req.body;
 
     const userExists = await User.findOne({email});
 
@@ -95,10 +100,25 @@ const registerSocialUser = asyncHandler(async (req, res) => {
         throw new Error('User already exists');
     }
 
+    var googleLogin = false;
+    var facebookLogin = false;
+
+    if(socialLoginString == 'facebook'){
+        facebookLogin = true;
+    }
+    else if(socialLoginString == 'google'){
+        googleLogin = true;
+    }
+    else{
+        res.status(400);
+        throw new Error('Invalid social login string');
+    }
+
     const user = await User.create({
         name,
         email,
-        socialLogin
+        googleLogin,
+        facebookLogin
     });
 
     if (user) {
@@ -108,7 +128,7 @@ const registerSocialUser = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            socialLogin: user.socialLogin,
+            isAdmin: user.isAdmin,
         });
     } else {
         res.status(400);
