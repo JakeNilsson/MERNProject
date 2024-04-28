@@ -22,12 +22,17 @@ const SearchBox = () => {
     setMinPrice("");
     setMaxPrice("");
     let min;
+    let max;
     if (maxPrice) {
       min = Math.min(minPrice, maxPrice);
     } else {
       min = minPrice;
     }
-    const max = Math.max(minPrice, maxPrice);
+    if (minPrice) {
+      max = Math.max(minPrice, maxPrice);
+    } else {
+      max = maxPrice;
+    }
     if (keyword.trim()) {
       if (minPrice && maxPrice) {
         navigate(`/search/${keyword}/min/${min}/max/${max}`);
@@ -56,12 +61,17 @@ const SearchBox = () => {
     setMinPrice("");
     setMaxPrice("");
     let min;
+    let max;
     if (maxPrice) {
       min = Math.min(minPrice, maxPrice);
     } else {
       min = minPrice;
     }
-    const max = Math.max(minPrice, maxPrice);
+    if (minPrice) {
+      max = Math.max(minPrice, maxPrice);
+    } else {
+      max = maxPrice;
+    }
     if (keyword.trim()) {
       if (minPrice && maxPrice) {
         navigate(
