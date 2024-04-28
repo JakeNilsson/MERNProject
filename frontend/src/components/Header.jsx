@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Badge, Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { FaShoppingCart, FaUser } from 'react-icons/fa';
+import { FaShoppingCart, FaUser, FaBox } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLogoutMutation } from '../slices/usersApiSlice';
@@ -53,6 +53,11 @@ const Header = () => {
                                     </Badge>
                                 )
                             }
+                        </Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to='/save'>
+                        <Nav.Link>
+                            <FaBox /> Saved for Later
                         </Nav.Link>
                     </LinkContainer>
                     { userInfo ? (
