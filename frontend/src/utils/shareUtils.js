@@ -1,6 +1,13 @@
 const shareTwitter = (product) => {
-    const shareText = encodeURIComponent(`${product.name} | $${product.price}\n${product.description}...\n`);
+    // ensures total tweet length is <= 280 chars
+    const charsUsed = product.name.length + window.location.href.length;
+    const charsRemaining = 260 - charsUsed;
+
+    const descTrimmed = product.description.substring(0, charsRemaining)
+
+    const shareText = encodeURIComponent(`${product.name} | $${product.price}\n${descTrimmed}...\n`);
     const shareLink = encodeURIComponent(window.location.href);
+    
     const TwitterUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareLink}`;
     window.open(TwitterUrl, '_blank');
 }
